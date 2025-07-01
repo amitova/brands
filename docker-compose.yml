@@ -1,0 +1,39 @@
+version: "3.9"
+services:
+  web:
+    build:
+      target: web
+      context: .
+    image: brands
+    env_file:
+      - .env
+    ports:
+      - "8088:80"
+    volumes:
+      - .:/var/www/html
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mariadb:10.8.3
+    # platform: linux/arm64/v8   # for M1/M2 Macs
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: brands      # ← add this so the DB exists
+      MYSQL_USER: root      # ← optional non-root user
+      MYSQL_PASSWORD: root  # ← credentials for that user
+    volumes:
+      - db_data:/var/lib/mysql        # ← persist data across restarts
+    ports:
+      - "3307:3306"
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - "8080:8080"
+
+volumes:
+  db_data:
