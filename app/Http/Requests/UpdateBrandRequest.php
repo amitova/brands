@@ -11,7 +11,7 @@ class UpdateBrandRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,10 @@ class UpdateBrandRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'brand_name' => 'sometimes|required|string|max:255',
+            'brand_image' => 'sometimes|required|url|max:2048',
+            'rating' => 'sometimes|required|integer|min:1|max:5',
+            'country_code' => 'sometimes|required|string|size:2',
         ];
     }
 }

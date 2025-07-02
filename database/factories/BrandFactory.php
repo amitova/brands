@@ -21,7 +21,7 @@ class BrandFactory extends Factory
 
         return [
             'brand_name'   => $this->faker->unique()->company(),
-            'brand_image'  => $this->faker->imageUrl(150, 150, 'technics', true),
+            'brand_image'  => 'https://placehold.co/150x150?text=' . urlencode($this->faker->word),
             'rating'       => $this->faker->numberBetween(1, 5),
             'country_code' => $this->faker->randomElement($countries),
         ];
