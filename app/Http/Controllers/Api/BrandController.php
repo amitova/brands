@@ -14,9 +14,15 @@ class BrandController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request, BrandService $service)
     {
-        //
+        // test http://localhost:8088/api/brands?search=and&per_page=15
+        $filters = $request->only(['search']);
+        $perPage = (int) $request->query('per_page', 10);
+
+        return response()->json(
+            $service->listBrandsWithFilters($filters, $perPage)
+        );
     }
 
     /**
@@ -101,8 +107,6 @@ class BrandController extends Controller
         $threshold = (int) env('BRAND_MIN_RATING');
 
         $list = $service->topList($country, $threshold);
-
-        //return view('test', ['brands' => $list, 'country' => $country, 'threshold' => $threshold]);
         return response()->json($list);
     }
 }

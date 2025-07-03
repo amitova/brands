@@ -29,4 +29,9 @@ class BrandService {
         }
         return $list;
     }
+
+    public function listBrandsWithFilters(array $filters, int $perPage = 10)
+    {
+        return Brand::filterBrand($filters)->paginate($perPage)->appends($filters);
+    }
 }

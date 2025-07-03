@@ -30,6 +30,7 @@ class Brand extends Model
     public function scopeDefaultBrandsList(Builder $query, $threshold)
     {
         return $query->where('rating', '>=', $threshold)
+
                     ->orderByDesc('rating');
     }
 
@@ -51,5 +52,19 @@ class Brand extends Model
     {
         $brand->update($data);
         return $brand;
+    }
+
+    public static function filterBrand(array $filters)
+    {
+        $threshold = config('brands.min_rating', 4); // or use env('BRAND_MIN_RATING', 4)
+
+        $query = self::query()
+            ->defaultBrandsList($threshold); // apply scope for rating
+
+        if (!empty($filters['search'])) {
+            $query->where('brand_name', 'like', '%' . $filters['search'] . '%');
+        }
+
+        return $query;
     }
 }
