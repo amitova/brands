@@ -10,7 +10,7 @@ Toplist by Country
 
 Live Brand Search
 - input search with visual feedback.
-- filters brands by name with minimum rating logic (shows the brands with rating bigger or equal to 4, configurated in .ENV).
+- Filters brands by name with a minimum rating logic (shows brands with a rating of 4 or higher,  configured in .ENV).
 
 Full API Support
 - CRUD operations for brands.
@@ -41,7 +41,8 @@ Getting Started
 
 git clone https://github.com/amitova/brands.git
 cd brands
-cp .env.example .env
+config .env
+generate APP_KEY - docker compose exec web php artisan key:generate
 
 1. Docker Setup
 
